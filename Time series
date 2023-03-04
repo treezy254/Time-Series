@@ -1,0 +1,154 @@
+Time series
+---
+engineer features to model the major time series components
+visualize time series with many kinds of time series plots
+create forecasting hybrids that combine the strengths of complementary models
+adapt machine learning methods to a variety of forecasting tasks.
+
+
+Linear Regression with Time Series
+--
+
+ time series: a setof observations recorded over time.
+
+ Linear regression algorithm learns how to make a weighted sum from its input features
+
+ Time-step features are features which we can derive directly from the time index.
+
+ Time-dummy counts off the time steps in the series from the bgining to end
+
+
+-----
+
+Trend
+--
+
+The trend component of a time series represents a persistent, long-term change in the mean of the series.
+
+The trend is the slowest-moving part of a series, the part representing the largest time scale of importance.
+
+    Moving Average Points
+    ---
+    TO compute a moing average of a time series, we compute the average of the values within a sliding window of some defined width. 
+    Each point on the graph represents the avergae of all the values in the series that fall within the window on either side.
+
+    Engineering Trend
+    ---
+    y = target
+    x = time
+    m = a
+    b = constant
+
+    y = mx + b
+    y = mx^2 * x + c
+
+
+    Deterministioc Process : a technical term for a time series that is non random or completely determined
+
+
+---
+
+Seasonality
+--
+
+we say a time series exhibits seasonality whenever there is a regular, periodic change in the mean of the series.
+
+    Indicators
+    -
+    A seasonal plot shows segments of time plotted against soem common period, The period being the "season" you want to observe.
+
+    Seasonal Indicators are binary features that represent seasonal differences in the level of a time series. 
+
+    Seasonal  indicators is what you get when you treat a seasonla period as a categorical feature and apply one-hot encoding
+
+
+    Fourier Features and the Periodogram
+    ---
+    This features are better suited for long seasons over many observations where indicators would be impractical.
+
+    Fourier features are pairs of sine and cosine curves, one pair for each for the potential frequency in the season starting with the longest.
+
+    periodogram
+    (a ** 2 + b **2 ) / 2
+    a and b are the coefficients of the sine and cosine at that frequency.
+
+
+
+---
+
+Time Series as Features
+---
+
+    Cycles
+    -
+    These are patterns of growth and decay in a time series associated with how the value in a series at one time depends on values at previous times, but not necessarily on the time step itself.
+
+    Lagged Series and Lag Plots
+    -
+    Lagging a time series means to shift its vaues forward one or more steps, or equivalently, to shift the time index backward one or more steps. 
+
+    Lag plots
+    -
+    A lag plot of a time series shows its values plotted against its lags. 
+    Autocorrelation : - the correlation a time series has with one of its lags.
+
+    Choosing Lags
+    -
+    
+----
+
+Hybrid Models
+--
+
+    Components and Residuals
+    ---
+
+    series = trend + seasons + cycles + error
+
+    The residuals of a model are the difference between the target the model was trained on and the predictions the model makes.
+
+
+    Hybrid Forecasting with Residuals
+    --
+
+    The method of using predictions as features is known as stacking.
+    The method of fitting residuals is actually the same method the gradient boosting algorithm uses.
+
+
+
+---
+
+Forecasting With Machine Learning
+--
+
+There are two things to establish before designing a forecasting model:
+
+ - What information is available at the time a forecast is made (features), and,
+ - The time period during which you require forecasted values(target).
+
+The forecast origin is time at which you are making a forecast
+
+The forecast horizon is the time for which you are making a forecast.
+
+The time between the origin and the horizon is the lead time(latency) of the forecast.
+
+
+    Preparing Data for Forecasting
+    ---
+
+    Multistep Forecatsing Strategies
+    --
+
+    - Multioutput model
+        :: Use a model that produces multiple outputs naturally.
+
+    - Direct Strategy
+        :: Train a separate model for each step in the horizon
+
+    - Recursive Strategy
+        :: Train a single one-step model and use its forecasts to update the lag fetaures for the next step.
+
+    - DirRec startegy
+        :: A combination of the direct and recursive startegies: train a model for each step and use forecats from previous steps as new lag features.
+
+        
